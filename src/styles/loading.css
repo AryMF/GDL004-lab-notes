@@ -1,0 +1,83 @@
+.Loading {
+    position: absolute;
+    top: 0;
+    left: 0;
+    text-align: center;
+  }
+  
+  .Loading-header {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+    color: white;
+    background-color: #28A227;
+  }
+  
+  .Loading-logo {
+    width: 130px;
+    pointer-events: none;
+  }
+  
+  @media (prefers-reduced-motion: no-preference) {
+    .note-1 {
+      animation: note-1-animation infinite 5s steps(1, end) 0s; 
+    }
+    .note-2 {
+      animation: note-2-animation infinite 5s steps(1, end) 0s;
+    }
+    .note-3 {
+      animation: note-3-animation infinite 5s steps(1, end) 0s;
+    }
+    .note-4 {
+      animation: note-4-animation infinite 5s steps(1, end) 0s;
+    }
+  }
+  
+  @keyframes note-1-animation{
+    0% {
+       opacity: 0;
+    }
+    15% {
+      opacity: 100%;
+    }
+    100% {
+      opacity: 100%;
+    }
+  }
+  @keyframes note-2-animation{
+    0% {
+       opacity: 0;
+    }
+    30% {
+      opacity: 100%;
+    }
+    100% {
+      opacity: 100%;
+    }
+  }
+  @keyframes note-3-animation{
+    0% {
+       opacity: 0;
+    }
+    45% {
+      opacity: 100%;
+    }
+    100% {
+      opacity: 100%;
+    }
+  }
+  @keyframes note-4-animation{
+    0% {
+       opacity: 0;
+    }
+    60% {
+      opacity: 100%;
+    }
+    100% {
+      opacity: 100%;
+    }
+  }
