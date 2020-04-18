@@ -35,14 +35,34 @@ This React Functional Component calls for the
 
 */
 
+const NotesContainer = styled.div`
+  height: 100%;
+  background-color: cyan;
+  display: flex;
+  flex-direction: column;
+`;
+
+const NewNoteEditorStyled = styled(NewNoteEditor)`
+  background-color: yellow;
+`;
+
+const NotesScroller = styled.div`
+  padding: 10px;
+  overflow: auto;
+  flex: 1;
+  background-color: red;
+`;
+
 const Notes = ({ arrayOfNotes }) => {
   console.log('>>>>>>arrayOfNotes', arrayOfNotes);
 
   return (
-    <>
-      <NewNoteEditor />
-      <NoteWall arrayOfNotes={arrayOfNotes} />
-    </>
+    <NotesContainer>
+      <NewNoteEditorStyled />
+      <NotesScroller>
+        <NoteWall arrayOfNotes={arrayOfNotes} />
+      </NotesScroller>
+    </NotesContainer>
   );
 };
 
