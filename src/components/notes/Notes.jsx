@@ -46,7 +46,4 @@ const Notes = ({ arrayOfNotes }) => {
   );
 };
 
-// {/* <label> {arrayOfNotes.length} </label> */}
-//       {/* <NoteCreation arrayOfNotes={arrayOfNotes} /> */}
-
 export default Notes;
