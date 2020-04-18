@@ -35,18 +35,19 @@ This React Functional Component calls for the
 
 */
 
+const NotesContainer = styled.div`
+  heigh: 100%;
+`;
+
 const Notes = ({ arrayOfNotes }) => {
   console.log('>>>>>>arrayOfNotes', arrayOfNotes);
 
   return (
-    <>
+    <NotesContainer>
       <NewNoteEditor />
       <NoteWall arrayOfNotes={arrayOfNotes} />
-    </>
+    </NotesContainer>
   );
 };
-
-// {/* <label> {arrayOfNotes.length} </label> */}
-//       {/* <NoteCreation arrayOfNotes={arrayOfNotes} /> */}
 
 export default Notes;
