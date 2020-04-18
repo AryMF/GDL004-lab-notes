@@ -11,5 +11,10 @@ export default {
     galliano: '#DF9D04',
     forestGreen: '#28A227',
     highlight: '#989898',
-  }
+  },
+  components: {
+    sidebar: {
+      width: 300,
+    },
+  },
 };
