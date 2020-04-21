@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import styled, { ThemeProvider } from 'styled-components';
-import database from '../controller/FirebaseApp';
 import { dataRetrive } from '../controller/DatabaseApp';
 import SideMenu from '../components/sideMenu/SideMenu.container';
 import lightTheme from '../theme/light.theme';

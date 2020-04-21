@@ -1,3 +1,6 @@
+//Cloud Firestore
+const database = firebase.firestore();
+
 export const dataRetrive = (uid) => {
     const example = [
         {

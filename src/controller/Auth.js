@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import database from './FirebaseApp';
+import databaseConfig from './FirebaseApp';
 
 
 export const AuthContext = React.createContext();
@@ -8,7 +8,7 @@ export const AuthProvider = ({children}) => {
     const [currentUser, setCurrentUser] = useState(null);
 
     useEffect(() => {
-        database.auth().onAuthStateChanged(setCurrentUser);
+        databaseConfig.auth().onAuthStateChanged(setCurrentUser);
     }, []);
 
     return (
@@ -22,9 +22,9 @@ export const AuthProvider = ({children}) => {
 };
 
 export const accountCreationWithEmail = (email, password) => {
-    return database.auth().createUserWithEmailAndPassword(email, password);
+    return databaseConfig.auth().createUserWithEmailAndPassword(email, password);
 }
 
 export const signInWithEmail = (email, password) => {
-    return database.auth().signInWithEmailAndPassword(email, password);
+    return databaseConfig.auth().signInWithEmailAndPassword(email, password);
 }

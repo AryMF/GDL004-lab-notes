@@ -1,5 +1,5 @@
 import React from 'react';
-import database from '../controller/FirebaseApp';
+import databaseConfig from '../controller/FirebaseApp';
 
 import {ThemeProvider} from 'styled-components';
 import lightTheme from '../theme/light.theme.js';
@@ -17,9 +17,9 @@ function TempLogout(props) {
             <Container>
                 <Form>
                     <h4> bienvenido a </h4>
-                    <Title> memento </Title>                    
-                    <DivisorLine> or </DivisorLine>                    
-                    <Button onClick = {() => database.auth().signOut()}> log out </Button>
+                    <Title> memento </Title>
+                    <DivisorLine> or </DivisorLine>
+                    <Button onClick = {() => databaseConfig.auth().signOut()}> log out </Button>
                 </Form>
             </Container>
     </ThemeProvider>
