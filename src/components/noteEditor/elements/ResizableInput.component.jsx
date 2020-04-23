@@ -9,11 +9,17 @@ const TextAreaStyle = styled.textarea `
     outline: none;
     margin: 5px;
     background-color: transparent;
+
+	::placeholder{
+		color: ${props => props.rows == '1'
+			? props.theme.colors.forestGreen
+			: props.theme.colors.highlight
+		};
+	}
 `;
 
-function ResizableInput ({onInputHanddler, onKeyDown}) {
+function ResizableInput ({defaultRows, inputTextArea, onClick, onInputHanddler, onKeyDown}) {
     const rowSize = 22;
-    const defaultRows = 4;
     const maxRows = 10;
 
     const handdlerChange = (e) => {
@@ -22,9 +28,8 @@ function ResizableInput ({onInputHanddler, onKeyDown}) {
         let actualNumberOfRows = e.target.scrollHeight / rowSize;
 
         //onKeyDown(e);
-        console.log(`actualNumberOfRows ${actualNumberOfRows}`);
         let numberOfRowsToSet = actualNumberOfRows > defaultRows ? actualNumberOfRows + 1 : defaultRows;
-        e.target.rows = numberOfRowsToSet < maxRows 
+        e.target.rows = numberOfRowsToSet < maxRows
             ? numberOfRowsToSet
             : maxRows
         ;
@@ -32,7 +37,7 @@ function ResizableInput ({onInputHanddler, onKeyDown}) {
     }
 
     return (
-        <TextAreaStyle placeholder='Empty note' rows={defaultRows} onInput={handdlerChange} onKeyDown={onKeyDown} />
+        <TextAreaStyle value={inputTextArea} placeholder='Take a note...' rows={defaultRows} onClick={onClick} onInput={handdlerChange} onKeyDown={onKeyDown} />
     );
 }
 //onKeyDown={handdlerChange}

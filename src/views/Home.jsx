@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import styled, { ThemeProvider } from 'styled-components';
-import { dataRetrive } from '../controller/DatabaseApp';
+
+import { AuthContext } from '../controller/Auth';
+import { dataRetrieve } from '../controller/DatabaseApp';
 import SideMenu from '../components/sideMenu/SideMenu.container';
 import lightTheme from '../theme/light.theme';
 import oldTheme from '../theme/old.theme';
@@ -22,7 +24,8 @@ const MainStage = styled.div`
 `;
 
 function Home(props) {
-  const [arrayOfNotes, setNumberOfNotes] = useState(dataRetrive('001'));
+  const {currentUser} = useContext(AuthContext);
+  const [arrayOfNotes, setNumberOfNotes] = useState(dataRetrieve('001')); //currentUser.uid
 
   return (
     <ThemeProvider theme={oldTheme}>

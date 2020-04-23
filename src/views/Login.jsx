@@ -48,8 +48,8 @@ function Login({history}) {
                         <SocialButton onClick={ () => { alert('Twitter'); }}> <Twitter />  </SocialButton>
                     </div>
                     <p> Not a membre yet?<br/><Link to='/signup' style={{color: '#28A227'}}>Create Account</Link></p>
-                    
-                    
+
+
                 </Form>
             </Container>
     </ThemeProvider>

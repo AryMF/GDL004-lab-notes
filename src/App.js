@@ -1,11 +1,10 @@
-import React, { useContext }from 'react';
+import React, { useContext } from 'react';
 //import './styles/App.css';
 import { Route, Redirect, Switch  } from 'react-router-dom';
 import Loading from './views/Loading';
 import Login from './views/Login';
 import SignUp from './views/SignUp';
 import Home from './views/Home';
-import TempLogout from './views/TempLogout';
 import 'normalize.css';
 import { AuthContext } from './controller/Auth';
 
@@ -23,9 +22,8 @@ const App = () => {
     return (
         <Switch>
             <Route exact path = '/home' component = { !!currentUser ? Home : Login }/>
-            <Route exact path = '/logout' component = { !!currentUser ? TempLogout : Login }/>
-            <Route exact path = '/login' component = { !!currentUser ? TempLogout : Login } />
-            <Route exact path = '/signup' component = {!!currentUser ? TempLogout : SignUp} />
+            <Route exact path = '/login' component = { !!currentUser ? Home : Login } />
+            <Route exact path = '/signup' component = {!!currentUser ? Home : SignUp} />
             <Redirect to='/home'/>
         </Switch>
     );
@@ -34,7 +32,7 @@ const App = () => {
 export default App;
 
 /*
-<Switch>            
+<Switch>
     <PrivateRoute exact path='/home' component={TempLogout} user={currentUser}/>;
     <PrivateRoute exact path='/login' component={Login} user={currentUser}/>;
     <PrivateRoute exact path='/signup' component={SignUp} user={currentUser}/>;

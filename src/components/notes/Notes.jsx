@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import NoteCreation from '../noteCreation/NoteCreation.container';
-import { NewNoteEditor } from '../newNoteEditor';
+//import NewNoteEditor from '../noteCreation/NoteCreation.container';
+import { NoteEditor } from '../noteEditor';
 import { NoteWall } from '../noteWall';
 
 /*
@@ -37,13 +37,10 @@ This React Functional Component calls for the
 
 const NotesContainer = styled.div`
   height: 100%;
-  background-color: cyan;
+  background-color: transparent;
   display: flex;
   flex-direction: column;
-`;
-
-const NewNoteEditorStyled = styled(NewNoteEditor)`
-  background-color: yellow;
+  flex: 5;
 `;
 
 const NotesScroller = styled.div`
@@ -58,12 +55,18 @@ const Notes = ({ arrayOfNotes }) => {
 
   return (
     <NotesContainer>
-      <NewNoteEditorStyled />
-      <NotesScroller>
-        <NoteWall arrayOfNotes={arrayOfNotes} />
-      </NotesScroller>
+		<NoteEditor />
     </NotesContainer>
   );
 };
 
 export default Notes;
+
+/*
+<NotesContainer>
+	<NoteEditor />
+	<NotesScroller>
+		<NoteWall arrayOfNotes={arrayOfNotes} />
+	</NotesScroller>
+</NotesContainer>
+*/

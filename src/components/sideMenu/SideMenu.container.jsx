@@ -12,7 +12,7 @@ import trashSVG from '../../assets/icons/trash.svg';
 
 //background-color: lightcoral;
 const NavStyle = styled.div`
-  width: ${(props) => props.theme.components.sidebar.width + 'px'};
+  flex: 1;
   height: 100%;
   border-right: 1px solid ${(props) => props.theme.colors.highlight};
 `;

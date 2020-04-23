@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import styled from 'styled-components';
 
-import NoteTemplate from './NoteTemplate.container';
+/*import NoteTemplate from './NoteTemplate.container';
 
 const ContainerStyle = styled.div `
     width: calc(100% - 60px);
@@ -64,7 +64,7 @@ export default NoteArea;
 
 /*
 <TempDiv >
-    Hello World!            
+    Hello World!
 </TempDiv>
     display: flex;
     flex-direction: row;

@@ -2,7 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 
 import ButtonImage from '../../elements/ButtonImage/ButtonImage.component';
-import SearchBar from './SearchBar.component.js';
+import SearchBar from './SearchBar.component';
+import UserMenu from './UserMenu';
 
 const HeaderStyle = styled.header `
     position: absolute;
@@ -38,7 +39,7 @@ function HeaderBar(params) {
     return (
         <HeaderStyle>
             <DivStyle Flex='1' Direction='row' Justify='flex-start' Align='center'>
-                <ButtonImage 
+                <ButtonImage
                     altText='Sample'
                     imageRoute={require('../../assets/icons/burguerMenu.svg')}
                     handdler={() => {alert('Hacer algo.')}}
@@ -50,37 +51,31 @@ function HeaderBar(params) {
             </DivStyle>
             <SearchBar/>
             <DivStyle Flex='1' Direction='row' Justify='flex-end' Align='center'>
-                <ButtonImage 
+                <ButtonImage
                     altText='Sample'
                     imageRoute={require('../../assets/icons/reload.svg')}
                     handdler={() => {alert('Hacer algo.')}}
                     size='46px'
                     margin='0px 10px'
                 />
-                <ButtonImage 
+                <ButtonImage
                     altText='Sample'
                     imageRoute={require('../../assets/icons/grid.svg')}
                     handdler={() => {alert('Hacer algo.')}}
                     size='46px'
                     margin='0px 10px'
                 />
-                <ButtonImage 
+                <ButtonImage
                     altText='Sample'
                     imageRoute={require('../../assets/icons/config.svg')}
                     handdler={() => {alert('Hacer algo.')}}
                     size='46px'
                     margin='0px 10px'
                 />
-                <ButtonImage 
-                    altText='Sample'
-                    imageRoute={require('../../assets/images/avatar.png')}
-                    handdler={() => {alert('Hacer algo.')}}
-                    size='46px'
-                    margin='0px 10px'
-                />
+				<UserMenu/>
             </DivStyle>
         </HeaderStyle>
     );
-} 
+}
 
 export default HeaderBar;

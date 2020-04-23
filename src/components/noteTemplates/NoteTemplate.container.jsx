@@ -65,20 +65,20 @@ function NoteTemplate({
     return (
         <ContainerStyle containerBorderColor={containerBorderColor} containerMargin={containerMargin}>
             <div>
-                <InputStyle 
+                <InputStyle
                     type="text"
                     maxLength={inputMaxLength}
                     placeholder={inputPlaceholder}
                     onInput={inputOnInput}
                 />
-                <ButtonImage 
+                <ButtonImage
                     altText='Pin'
                     imageRoute={require('../../assets/icons/pin.svg')}
                     handdler={() => { alert('Pin note.') }}
                     size='40px'
                     margin='5px'
                 />
-                <TextAreaStyle 
+                <TextAreaStyle
                     placeholder={textAreaPlaceholder}
                     rows={textAreaDefaultRows}
                     onInputHanddler={textAreaOnInput}
