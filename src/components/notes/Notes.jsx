@@ -1,9 +1,14 @@
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
+
+import { dataRetrieve } from '../../controller/DatabaseApp';
+import { AuthContext } from '../../controller/Auth';
+
 
 //import NewNoteEditor from '../noteCreation/NoteCreation.container';
 import { NoteEditor } from '../noteEditor';
 import { NoteWall } from '../noteWall';
+import {EditNoteModal} from '../editNoteModal';
 
 /*
 # Notes
@@ -43,30 +48,41 @@ const NotesContainer = styled.div`
   flex: 5;
 `;
 
-const NotesScroller = styled.div`
-  padding: 10px;
-  overflow: auto;
-  flex: 1;
-  background-color: red;
-`;
+const Notes = () => {
+	const [firstRender, setFirstRender] = useState(true);
+	const {currentUser} = useContext(AuthContext);
+	const [arrayOfNotes, setNumberOfNotes] = useState([]);
+	const [showModal, setShowModal] = useState(false);
+	const [indexNoteToEdit, setIndexNoteToEdit]  = useState(-1);
 
-const Notes = ({ arrayOfNotes }) => {
-  console.log('>>>>>>arrayOfNotes', arrayOfNotes);
+	useEffect(() => {
+		const example = [];
+		dataRetrieve(currentUser.uid).then(function(querySnapshot) {
+			querySnapshot.forEach(function(doc) {
+				let note = doc.data();
+				note.id = doc.id;
+				example.push(note);
+			});
+			setNumberOfNotes(example);
+		  })
+		  .catch(function(error) {
+			alert('[Notes.jx] Error getting documents:', error);
+		  });
+	}, [useState]);
 
-  return (
-    <NotesContainer>
-		<NoteEditor />
-    </NotesContainer>
-  );
+	const openNoteEditor = (index) => {
+		setShowModal(true);
+		setIndexNoteToEdit(index);
+	}
+
+
+	return (
+	<NotesContainer>
+		<NoteEditor arrayOfNotes={arrayOfNotes} setNumberOfNotes={setNumberOfNotes}/>
+		<NoteWall arrayOfNotes={arrayOfNotes} setNumberOfNotes={setNumberOfNotes} openNoteEditor={openNoteEditor}/>
+		<EditNoteModal arrayOfNotes={arrayOfNotes} setNumberOfNotes={setNumberOfNotes} showModal={showModal} setShowModal={setShowModal} indexNoteToEdit={indexNoteToEdit} />
+	</NotesContainer>
+	);
 };
 
 export default Notes;
-
-/*
-<NotesContainer>
-	<NoteEditor />
-	<NotesScroller>
-		<NoteWall arrayOfNotes={arrayOfNotes} />
-	</NotesScroller>
-</NotesContainer>
-*/

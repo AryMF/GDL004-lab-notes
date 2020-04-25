@@ -29,16 +29,16 @@ const ContainerStyle = styled.div `
     background-color: transparent;
 `;
 
-const NewNoteEditor = ({}) => {
-	let [showEditor, setShowEditor] = useState(false);
+const NewNoteEditor = ({arrayOfNotes, setNumberOfNotes, isModal, indexNoteToEdit, exitModal}) => {
+	const [showEditor, setShowEditor] = useState(isModal ? true : false);
 	const themeContext = useContext(ThemeContext);
 	const {currentUser} = useContext(AuthContext);
-	let [backgroundColor, setBackgroundColor] = useState(themeContext.colors.noteTheme[0]);
-    let [inputTitle, setInputTitle] = useState('');
-	let [inputTextArea, setInputTextArea] = useState('');
-	let [pin, setPin] = useState(false);
-	let [noteColor, setNoteColor] = useState(0);
-	let [imageURL, setImageURL] = useState(null);
+	const [backgroundColor, setBackgroundColor] = useState(themeContext.colors.noteTheme[0]);
+    const [inputTitle, setInputTitle] = useState('');
+	const [inputTextArea, setInputTextArea] = useState('');
+	const [pin, setPin] = useState(false);
+	const [noteColor, setNoteColor] = useState(0);
+	const [imageURL, setImageURL] = useState(null);
 
     const imageButtonHanddler = (e) => {
         setImageURL(imageURL ? null : 'imagen.jpg');
@@ -53,6 +53,9 @@ const NewNoteEditor = ({}) => {
         if(e.key === 'Escape') {
 			e.target.blur();
 			setShowEditor(false);
+			if(isModal) {
+				exitModal();
+			}
         }
     };
 
@@ -75,6 +78,18 @@ const NewNoteEditor = ({}) => {
 		setBackgroundColor(themeContext.colors.noteTheme[noteColor]);
 	}, [noteColor]);
 
+	useEffect(() => {
+        if(isModal){
+			let noteToEdit = Object.assign({}, arrayOfNotes[indexNoteToEdit]);
+			console.log('entrooooo ');
+			console.log(indexNoteToEdit);
+			setInputTitle(noteToEdit.title);
+			setInputTextArea(noteToEdit.text);
+			//setNoteColor(noteToEdit.color);
+			//setImageURL(null);
+		}
+	}, []);
+
 	const createNoteHanddler = (e) => {
         if(inputTitle != '' || inputTextArea != '' || imageURL != null) {
 			let info = {
@@ -82,11 +97,16 @@ const NewNoteEditor = ({}) => {
 				img: imageURL,
 				label: null,
 				pinned: pin,
+				archive: false,
+				deleted: false,
 				text: inputTextArea,
 				title: inputTitle,
 				uid: currentUser.uid,
 			}
 			createNoteInDB(info).then(function(docRef) {
+				const newDataArray = [...arrayOfNotes];
+				newDataArray.push(info);
+				setNumberOfNotes(newDataArray);
 				setShowEditor(false);
             })
             .catch(function(error) {

@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import styled from 'styled-components';
 import {closeSession} from '../../controller/Auth';
 
-import ButtonImage from '../../elements/ButtonImage/ButtonImage.component';
+import ButtonImage from '../ButtonImage/ButtonImage.component';
 import avatarSVG from '../../assets/images/avatar.png';
 
 const ImageStyle = styled.img `
@@ -32,7 +32,9 @@ const Dropdown = styled.div `
 	top: 64px;
 	right: 0px;
 	width: 250px;
-	height: 250px;
+	height: fit-content;
+	border: 1px solid ${props => props.theme.colors.highlight};
+	padding: 10px;
 	background-color: ${props => props.theme.colors.background};
 	flex-direction: column;
 	align-items: center;

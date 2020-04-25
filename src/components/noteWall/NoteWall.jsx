@@ -1,30 +1,115 @@
-import React from 'react';
+import React, {useState} from 'react';
 import styled from 'styled-components';
 
-const NoteWallContainer = styled.div`
-  height: 999999px;
-  background-color: pink;
+import { actualizeDocument } from '../../controller/DatabaseApp';
+
+import NoteTemplate from './elements/NoteTemplate';
+
+
+const SectionLabel = styled.label `
+	text-align: left;
+`;
+const PinnedNoteWallContainer = styled.div`
+	height: fit-content;
+	background-color: transparent;
+	padding: 15px;
+	margin-bottom: 30px;
+	display: ${props => props.display};
+	grid-gap: 20px;
+	grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
 `;
 
-const NoteWall = ({ arrayOfNotes }) => {
-  console.log('>>>NoteWall', arrayOfNotes);
-  return (
-    <NoteWallContainer contentEditable={true}>
-      NoteWall Lorem ipsum dolor sit amet consectetur adipisicing elit.
-      Expedita, consectetur reiciendis! Eligendi totam ab eveniet recusandae
-      libero commodi dicta, animi in veniam sunt mollitia est repudiandae minima
-      distinctio vitae porro. Lorem ipsum dolor sit amet consectetur adipisicing
-      elit. Quis, ad. Ratione porro doloribus dolorem, autem non sed tempore
-      ducimus assumenda suscipit quia! Dicta laboriosam ea vel reprehenderit
-      rerum numquam saepe. Lorem ipsum dolor sit amet consectetur adipisicing
-      elit. Quod, cumque. Molestias corporis ducimus doloremque est ipsam ab
-      possimus blanditiis natus, labore qui, odio magni deleniti nesciunt
-      eligendi reprehenderit iusto excepturi? Lorem ipsum dolor sit amet
-      consectetur, adipisicing elit. Placeat necessitatibus quis ex sit qui
-      tempore, dolore repellendus in, quas debitis repudiandae numquam aut neque
-      cum suscipit consequatur accusamus alias. Corrupti!
-    </NoteWallContainer>
-  );
+const NoteWallContainer = styled.div`
+	height: fit-content;
+	background-color: transparent;
+	padding: 15px;
+	display: grid;
+	grid-gap: 20px;
+	grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+`;
+
+const NotesScroller = styled.div`
+	display: flex;
+	flex-direction: column;
+	align-items: left;
+	padding: 10px;
+	overflow: auto;
+	flex: 1;
+	background-color: transparent;
+`;
+
+const NoteWall = ({arrayOfNotes, setNumberOfNotes, openNoteEditor}) => {
+	let normalNotes = [];
+	let pinnedNotes = [];
+
+	const changeConfiguration = (index, props) => {
+		const {pinned, archive, deleted, color} = props;
+		let tempDataArray = [...arrayOfNotes];
+		const newData = Object.assign({}, tempDataArray[index]);
+		delete newData.id;
+
+		console.log(pinned, archive, deleted, color);
+
+		if(pinned === true || pinned === false) {
+			newData.pinned = pinned;
+			tempDataArray[index].pinned = pinned;
+		}
+
+		if(archive === true || archive === false) {
+			newData.archive = archive;
+			tempDataArray[index].archive = archive;
+		}
+
+		if(deleted === true || deleted === false) {
+			newData.deleted = deleted;
+			tempDataArray[index].deleted = deleted;
+		}
+
+		if(color >= 0) {
+			newData.color = color;
+			tempDataArray[index].color = color;
+		}
+		console.log(newData);
+		actualizeDocument(tempDataArray[index].id, newData)
+			.then(() => {
+				//Document successfully written
+				setNumberOfNotes(tempDataArray);
+			}).catch((error) => {
+				alert('Error saving changes. ', error);
+			});
+	}
+
+	arrayOfNotes.forEach( (element, index) => {
+		let template = <NoteTemplate
+			key={element.id}
+			data={element}
+			pinButtonHanddler={() => {changeConfiguration(index, {pinned: !element.pinned})}}
+			archiveButtonHanddler={() => {changeConfiguration(index, {archive: !element.archive})}}
+			deleteButtonHanddler={() => {changeConfiguration(index, {deleted: !element.deleted})}}
+			colorButtonHanddler={changeConfiguration}
+			noteIndex={index}
+			editButtonHanddler={() => {openNoteEditor(index)}}
+		/>;
+		if(element.pinned === true){
+			pinnedNotes.push(template);
+		} else {
+			normalNotes.push(template);
+		}
+	});
+
+
+	return (
+		<NotesScroller>
+			<SectionLabel>{pinnedNotes.length > 0 ? 'Pinned' : ''}</SectionLabel>
+			<PinnedNoteWallContainer display={pinnedNotes.length > 0 ? 'grid' : 'none'}>
+				{pinnedNotes}
+			</PinnedNoteWallContainer>
+			<SectionLabel>{pinnedNotes.length > 0 ? 'Others' : ''}</SectionLabel>
+			<NoteWallContainer>
+				{normalNotes}
+			</NoteWallContainer>
+		</NotesScroller>
+	);
 };
 
 export default NoteWall;

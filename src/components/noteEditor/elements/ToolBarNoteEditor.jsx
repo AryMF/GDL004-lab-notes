@@ -1,7 +1,7 @@
-import React, {useState} from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
-import ButtonImage from '../../../elements/ButtonImage/ButtonImage.component';
+import ButtonImage from '../../ButtonImage/ButtonImage.component';
 import ThemeButton from '../../themeButton/ThemeButton';
 
 

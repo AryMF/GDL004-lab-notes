@@ -1,9 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import ButtonImage from '../../elements/ButtonImage/ButtonImage.component';
+import ButtonImage from '../ButtonImage/ButtonImage.component';
 import SearchBar from './SearchBar.component';
 import UserMenu from './UserMenu';
+
+import configSVG from '../../assets/icons/config.svg';
 
 const HeaderStyle = styled.header `
     position: absolute;
@@ -35,12 +37,12 @@ const H3Style = styled.h3 `
     margin: 0px 5px;
 `;
 
-function HeaderBar(params) {
+const HeaderBar = ({configButtonAction}) => {
     return (
         <HeaderStyle>
             <DivStyle Flex='1' Direction='row' Justify='flex-start' Align='center'>
                 <ButtonImage
-                    altText='Sample'
+                    altText='Menu'
                     imageRoute={require('../../assets/icons/burguerMenu.svg')}
                     handdler={() => {alert('Hacer algo.')}}
                     size='46px'
@@ -52,23 +54,16 @@ function HeaderBar(params) {
             <SearchBar/>
             <DivStyle Flex='1' Direction='row' Justify='flex-end' Align='center'>
                 <ButtonImage
-                    altText='Sample'
-                    imageRoute={require('../../assets/icons/reload.svg')}
-                    handdler={() => {alert('Hacer algo.')}}
-                    size='46px'
-                    margin='0px 10px'
-                />
-                <ButtonImage
-                    altText='Sample'
+                    altText='Layout'
                     imageRoute={require('../../assets/icons/grid.svg')}
                     handdler={() => {alert('Hacer algo.')}}
                     size='46px'
                     margin='0px 10px'
                 />
                 <ButtonImage
-                    altText='Sample'
-                    imageRoute={require('../../assets/icons/config.svg')}
-                    handdler={() => {alert('Hacer algo.')}}
+                    altText='Change theme'
+                    imageRoute={configSVG}
+                    handdler={configButtonAction}
                     size='46px'
                     margin='0px 10px'
                 />

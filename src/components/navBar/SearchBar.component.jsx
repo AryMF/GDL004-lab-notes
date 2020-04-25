@@ -1,11 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
-import ButtonImage from '../../elements/ButtonImage/ButtonImage.component';
+import ButtonImage from '../ButtonImage/ButtonImage.component';
 import image1 from '../../assets/icons/search.svg';
 
 const InputStyle = styled.input `
     max-width: 720px;
-    min-width: 200px; 
+    min-width: 200px;
     height: 46px;
     width: calc(100% - 96px);
     border: none;

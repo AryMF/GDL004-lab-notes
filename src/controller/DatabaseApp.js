@@ -11,25 +11,15 @@ const getCollectionData = (_collection, _uid) => {
 }
 
 export const dataRetrieve = (_uid) => {
-  const example = [];
-  getCollectionData(defaultCollection, _uid)
-    .then(function(querySnapshot) {
-      querySnapshot.forEach(function(doc) {
-          let note = doc.data();
-          note.id = doc.id;
-          example.push(note);
-      });
-      console.log('*********>>', example);
-      return example;
-    })
-    .catch(function(error) {
-      console.log('Error getting documents: ', error);
-      return error;
-    });
+  return getCollectionData(defaultCollection, _uid)
 }
 
 export const createNoteInDB = (_info) => {
     // Add a new document with a auto generated id.
     _info["creationDate"] = Firebase.firestore.FieldValue.serverTimestamp();
     return dataSource.collection(defaultCollection).add(_info);
+}
+
+export const actualizeDocument = (_document, _data) => {
+	return dataSource.collection(defaultCollection).doc(_document).set(_data);
 }

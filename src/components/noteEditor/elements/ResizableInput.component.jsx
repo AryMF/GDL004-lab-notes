@@ -37,7 +37,7 @@ function ResizableInput ({defaultRows, inputTextArea, onClick, onInputHanddler, 
     }
 
     return (
-        <TextAreaStyle value={inputTextArea} placeholder='Take a note...' rows={defaultRows} onClick={onClick} onInput={handdlerChange} onKeyDown={onKeyDown} />
+        <TextAreaStyle value={inputTextArea} placeholder='Take a note...' rows={defaultRows} onClick={onClick} onChange={handdlerChange} onKeyDown={onKeyDown} />
     );
 }
 //onKeyDown={handdlerChange}

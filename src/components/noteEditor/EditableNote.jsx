@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import styled from 'styled-components';
 
-import ButtonImage from '../../elements/ButtonImage/ButtonImage.component';
+import ButtonImage from '../ButtonImage/ButtonImage.component';
 import ResizableInput from './elements/ResizableInput.component';
 import ToolBarNoteEditor from './elements/ToolBarNoteEditor';
 
@@ -71,7 +71,7 @@ const EditableNote = ({
 						type="text"
 						maxLength='100'
 						placeholder='Title'
-						onInput={inputOnInput}
+						onChange={inputOnInput}
 						onKeyDown={onKeyDown}
 					/>
 					<ButtonImage

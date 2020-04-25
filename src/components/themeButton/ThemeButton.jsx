@@ -1,7 +1,7 @@
 import React, {useState, useContext, useEffect} from 'react';
 import styled, { ThemeContext } from 'styled-components';
 
-import ButtonImage from '../../elements/ButtonImage/ButtonImage.component';
+import ButtonImage from '../ButtonImage/ButtonImage.component';
 import themeSVG from '../../assets/icons/theme.svg';
 import selectedSVG from '../../assets/icons/accept.svg';
 
@@ -23,11 +23,12 @@ const ColorButton = styled.button `
 const Dropdown = styled.div `
 	display: ${props => props.display};
 	position: relative;
-	top: 2px;
+	top: -48px;
 	right: 0px;
 	width: 250px;
 	height: fit-content;
 	background-color: ${props => props.theme.colors.background};
+	border: 1px solid ${props => props.theme.colors.highlight};
 	flex-direction: row;
 	flex-flow: wrap;
 `;
@@ -41,7 +42,7 @@ const ThemeButtonContainer = styled.div `
 	background-color: transparent;
 `;
 
-const ThemeButton = ({noteColor, setNoteColor}) => {
+const ThemeButton = ({noteColor, setNoteColor, noteIndex}) => {
 	const themeContext = useContext(ThemeContext);
 	let [display, setDisplay] = useState(false);
 	let [selectedColor, setSelectedColor] = useState(noteColor);
@@ -57,13 +58,13 @@ const ThemeButton = ({noteColor, setNoteColor}) => {
 	}
 
 	const onClickHanddler = (index) => (e) => {
-		setNoteColor(index);
 		setSelectedColor(index);
+		if(noteIndex){
+			setNoteColor(noteIndex, {color: index});
+		}else{
+			setNoteColor(index);
+		}
 	}
-
-	/*useEffect(() => {
-		console.log(`Selected color ~ `, selectedColor);
-	}, [selectedColor]);*/
 
 	const colorButtons = themeContext.colors.noteTheme.map( (element, index) => {
 		return (
