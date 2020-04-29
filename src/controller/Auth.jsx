@@ -32,9 +32,7 @@ export const signInWithEmail = (email, password) => {
 	return databaseConfig.auth().signInWithEmailAndPassword(email, password);
 };
 
-export const closeSession = () => {
-	return databaseConfig.auth().signOut();
-};
+export const closeSession = () => databaseConfig.auth().signOut();
 
 export const signInWithProvider = (provider) => {
 	// Google authentication
@@ -42,19 +40,21 @@ export const signInWithProvider = (provider) => {
 
 	switch (provider) {
 		case 'google':
-			databaseConfig.auth().signInWithRedirect(providerGoogle);
+			// databaseConfig.auth().signInWithRedirect(providerGoogle);
+			databaseConfig.auth().signInWithPopup(providerGoogle)
+				.then((result) => {
+					if (result.additionalUserInfo.isNewUser) {
+						// Verifica si es un nuevo usuario
+						localStorage.setItem('theme', 'true');
+					}
+				}).catch((error) => {
+				// Handle Errors here.
+					const errorCode = error.code;
+					const errorMessage = error.message;
+					alert(errorCode, '\n', errorMessage);
+				// ...
+				});
 			break;
 		default:
 	}
 };
-
-databaseConfig.auth().getRedirectResult()
-	.then((result) => {
-		if (result.user != null) {
-			// Verifica si es un nuevo usuario
-			console.log('result.user', result.user);
-			// localStorage.setItem("isNewUser", result.additionalUserInfo.isNewUser);
-		}
-	}).catch((error) => {
-		alert(error);
-	});

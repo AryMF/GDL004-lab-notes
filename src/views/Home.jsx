@@ -31,12 +31,14 @@ const MainStage = styled.div`
 `;
 
 function Home({ history }) {
-	const [darkTheme, setDarkTheme] = useState(true);
+	const initalTheme = localStorage.getItem('theme') === 'true' || false;
+	const [darkTheme, setDarkTheme] = useState(initalTheme);
 	const [showMenu, setShowMenu] = useState(true);
 	const [sectionActive, setSectionActive] = useState(0);
 
 	const themeChangerHanddler = () => {
 		setDarkTheme(!darkTheme);
+		localStorage.setItem('theme', darkTheme);
 	};
 
 	const manageMenuState = () => {
