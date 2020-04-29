@@ -11,6 +11,7 @@ export const ContainerStyle = styled.article`
     border: none;
     border-radius: 10px;
     margin: '0px';
+	padding: 10px;
 `;
 
 export const InputStyle = styled.input`

@@ -28,7 +28,7 @@ const LogoutButton = styled.button`
 const Dropdown = styled.div`
 	display: ${(props) => props.display};
 	position: absolute;
-	top: 64px;
+	top: 50px;
 	right: 0px;
 	width: 250px;
 	height: fit-content;
@@ -42,9 +42,9 @@ const Dropdown = styled.div`
 
 const UserMenuButtonContainer = styled.div`
 	display: flex;
-	flex-direction: column;
+	flex-direction: column-reverse;
 	align-items: flex-end;
-	height: ${(props) => props.size};
+	height: fit-content;
 	width: fit-content;
 	background-color: transparent;
 `;
@@ -65,7 +65,6 @@ function UserMenu() {
 
 	return (
 		<UserMenuButtonContainer
-			size={display ? '300px' : 'fit-content'}
 			onMouseEnter={onMouseEnterHanddler}
 			onMouseLeave={onMouseLeaveHanddler}
 		>

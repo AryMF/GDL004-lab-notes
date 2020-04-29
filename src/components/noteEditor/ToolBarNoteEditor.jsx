@@ -20,13 +20,13 @@ const ToolBarStyle = styled.div`
 function ToolBar({ noteColor, setNoteColor, imageButtonHanddler }) {
 	return (
 		<ToolBarStyle>
-			<ButtonImage
+			{/*<ButtonImage
 				altText="Add image"
 				imageRoute={imageSVG}
 				handdler={imageButtonHanddler}
 				size="40px"
 				margin="0px 5px"
-			/>
+			/>*/}
 			<ThemeButton noteColor={noteColor} setNoteColor={setNoteColor} />
 		</ToolBarStyle>
 	);

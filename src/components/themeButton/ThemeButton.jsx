@@ -53,15 +53,19 @@ const ThemeButton = ({
 			onMouseEnter={onMouseEnterHanddler}
 			onMouseLeave={onMouseLeaveHanddler}
 		>
+			<Dropdown
+				display={showMenu ? 'flex' : 'none'}
+			>
+				{colorButtons}
+
+			</Dropdown>
 			<ButtonImage
 				altText="Change color"
 				imageRoute={themeSVG}
 				size="40px"
 				margin="0px 5px"
 			/>
-			<Dropdown display={showMenu ? 'flex' : 'none'}>
-				{colorButtons}
-			</Dropdown>
+
 		</ThemeButtonContainer>
 	);
 }

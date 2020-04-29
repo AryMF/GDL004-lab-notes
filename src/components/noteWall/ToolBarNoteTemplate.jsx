@@ -40,13 +40,13 @@ function ToolBar({
 				size="40px"
 				margin="0px 5px"
 			/>
-			<ButtonImage
+			{/*<ButtonImage
 				altText="Add image"
 				imageRoute={imageSVG}
 				handdler={() => {alert('Hacer algo.')}}
 				size="40px"
 				margin="0px 5px"
-			/>
+			/>*/}
 			<ButtonImage
 				altText="Edit"
 				imageRoute={editSVG}

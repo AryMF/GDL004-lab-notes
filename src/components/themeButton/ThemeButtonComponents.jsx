@@ -18,8 +18,8 @@ export const ColorButton = styled.button`
 export const Dropdown = styled.div`
 	display: ${(props) => props.display};
 	position: relative;
-	top: -48px;
-	right: 0px;
+	top: -50px;
+	left: -80px;
 	width: 250px;
 	height: fit-content;
 	background-color: ${(props) => props.theme.colors.background};
@@ -30,9 +30,10 @@ export const Dropdown = styled.div`
 
 export const ThemeButtonContainer = styled.div`
 	display: flex;
-	flex-direction: column;
-	align-items: flex-end;
+	flex-direction: column-reverse;
+	align-items: flex-start;
+	justify-content: center;
 	height: fit-content;
-	width: 40px;
+	width: 48px;
 	background-color: transparent;
 `;
