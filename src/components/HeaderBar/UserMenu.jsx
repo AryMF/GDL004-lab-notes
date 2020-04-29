@@ -51,6 +51,7 @@ const UserMenuButtonContainer = styled.div`
 
 function UserMenu() {
 	const { currentUser } = useContext(AuthContext);
+	const avatarImage = currentUser.photoURL || avatarSVG;
 	const [display, setDisplay] = useState(false);
 
 	const onMouseEnterHanddler = (e) => {
@@ -70,14 +71,14 @@ function UserMenu() {
 		>
 			<ButtonImage
 				altText="User menu"
-				imageRoute={avatarSVG}
+				imageRoute={avatarImage}
 				size="46px"
 				margin="0px 10px"
 
 			/>
 			<Dropdown display={display ? 'flex' : 'none'}>
 				<br />
-				<ImageStyle src={avatarSVG} />
+				<ImageStyle src={avatarImage} />
 				<br />
 				<h4>
 					{currentUser.displayName}
