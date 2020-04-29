@@ -29,7 +29,7 @@ export function Modal({ onClose, children, ...props }) {
 
 	return modalNode
 		? ReactDOM.createPortal(
-			<Overlay>
+			<Overlay onClick={onClose}>
 				<Dialog {...props}>
 					<div>
 						{children}
@@ -74,12 +74,14 @@ const ButtonStyled = styled.button`
     margin: 20px;
     height: 42px;
     width: 42px;
-    background: transparent;
-    border: 2px solid ${(props) => props.theme.colors.forestGreen};
+    background: ${(props) => props.theme.colors.forestGreen};
+	color: #ffffff;
+    border: none;
     border-radius: 20px;
 	font-size: 22px;
     :hover {
-        background-color: ${(props) => props.theme.colors.forestGreen};
-        color: #ffffff;
+        background-color: ${(props) => props.theme.colors.highlight};
+        color: black;
+		border: 2px solid ${(props) => props.theme.colors.forestGreen};
     }
 `;

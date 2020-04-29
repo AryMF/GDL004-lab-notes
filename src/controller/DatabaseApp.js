@@ -7,7 +7,6 @@ const dataSource = Firebase.firestore();
 const defaultCollection = 'notes';
 
 const getCollectionData = (_collection, _uid) => {
-	console.log(' _uid', typeof _uid);
 	const collectionRef = dataSource.collection(_collection).where("uid", "==", _uid);
 	return collectionRef.get();
 };
