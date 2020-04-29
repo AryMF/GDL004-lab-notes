@@ -30,15 +30,14 @@ const MainStage = styled.div`
   flex-direction: row;
 `;
 
-function Home({ history }) {
-	const initalTheme = localStorage.getItem('theme') === 'true' || false;
-	const [darkTheme, setDarkTheme] = useState(initalTheme);
+function Home() {
+	const [darkTheme, setDarkTheme] = useState(localStorage.getItem('theme') === 'true' || false);
 	const [showMenu, setShowMenu] = useState(true);
 	const [sectionActive, setSectionActive] = useState(0);
 
 	const themeChangerHanddler = () => {
+		localStorage.setItem('theme', !darkTheme);
 		setDarkTheme(!darkTheme);
-		localStorage.setItem('theme', darkTheme);
 	};
 
 	const manageMenuState = () => {
