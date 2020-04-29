@@ -1,14 +1,26 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import styled, { ThemeProvider } from 'styled-components';
 
-import SideMenu from '../components/sideMenu/SideMenu.container';
-import lightTheme from '../theme/light.theme';
-import oldTheme from '../theme/old.theme';
-import GlobalStyles from '../styles/globalStyles';
-import Container from '../elements/Container.component';
+import * as theme from '../theme/theme';
+import GlobalStyle from '../GlobalStyle';
+import { closeSession } from '../controller/Auth';
 
-import HeaderBar from '../components/navBar/HeaderBar.container';
-import { Notes } from '../components/notes';
+import { ModalProvider } from '../components/Modal/Modal';
+import { HeaderBar } from '../components/HeaderBar';
+import { SideMenu } from '../components/SideMenu';
+import { Notes } from '../components/Notes';
+
+const Container = styled.div`
+	background: ${(props) => props.theme.colors.background};
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	height: 100vh;
+	width: 100vw;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+`;
 
 const MainStage = styled.div`
   position: absolute;
@@ -19,23 +31,54 @@ const MainStage = styled.div`
   flex-direction: row;
 `;
 
-const Home = () => {
-	let [darkTheme, setDarkTheme] = useState(true);
+const ButtonStyled = styled.button`
+    margin: 20px;
+    height: 42px;
+    width: 122px;
+    background: transparent;
+    border: 2px solid ${(props) => props.theme.colors.forestGreen};
+    border-radius: 20px;
+	font-size: 22px;
+    :hover {
+        background-color: ${(props) => props.theme.colors.forestGreen};
+        color: #ffffff;
+    }
+`;
 
-	const changeTheme = () => {
+function Home({ history }) {
+	const [darkTheme, setDarkTheme] = useState(true);
+	const [showMenu, setShowMenu] = useState(true);
+	const [sectionActive, setSectionActive] = useState(0);
+
+	const themeChangerHanddler = () => {
 		setDarkTheme(!darkTheme);
-	}
+	};
+
+	const manageMenuState = () => {
+		setShowMenu(!showMenu);
+	};
+
+	const singOutButton = async () => {
+		try {
+			await closeSession();
+			history.push('/login');
+		} catch (error) {
+			alert(error);
+		}
+	};
 
 	return (
-		<ThemeProvider theme={darkTheme ? oldTheme : lightTheme}>
-			<GlobalStyles />
-			<Container>
-			<HeaderBar configButtonAction={changeTheme}/>
-			<MainStage>
-				<SideMenu />
-				<Notes/>
-			</MainStage>
-			</Container>
+		<ThemeProvider theme={darkTheme ? theme.old : theme.light}>
+			<GlobalStyle />
+			<ModalProvider>
+				<Container>
+					<HeaderBar manageMenuState={manageMenuState} themeChangerButton={themeChangerHanddler} />
+					<MainStage>
+						{showMenu ? <SideMenu settingView={setSectionActive} /> : null}
+						<Notes sectionActive={sectionActive} />
+					</MainStage>
+				</Container>
+			</ModalProvider>
 		</ThemeProvider>
 	);
 }

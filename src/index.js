@@ -1,15 +1,21 @@
+/* eslint-disable react/jsx-filename-extension */
 import React from 'react';
 import ReactDOM from 'react-dom';
-//import './index.css';
 import { AuthProvider } from './controller/Auth';
-import { BrowserRouter as Router} from 'react-router-dom';
+import './index.css';
 import App from './App';
+// import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
-    <AuthProvider>
-        <Router>
-            <App />
-        </Router>
-    </AuthProvider>, 
-    document.getElementById('root')
+	<React.StrictMode>
+		<AuthProvider>
+			<App />
+		</AuthProvider>
+	</React.StrictMode>,
+	document.getElementById('root'),
 );
+
+// If you want your app to work offline and load faster, you can change
+// unregister() to register() below. Note this comes with some pitfalls.
+// Learn more about service workers: https://bit.ly/CRA-PWA
+// serviceWorker.unregister();

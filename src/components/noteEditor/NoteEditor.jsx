@@ -1,24 +1,24 @@
-import React, {useState, useEffect, useContext} from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import styled, { ThemeContext } from 'styled-components';
 
-import {createNoteInDB} from '../../controller/DatabaseApp';
 import { AuthContext } from '../../controller/Auth';
 
 import EditableNote from './EditableNote';
 
-const CreateNoteStyle = styled.div `
+const CreateNoteStyle = styled.div`
     max-width: 816px;
     height: fit-content;
     min-height: 48px;
     border-radius: 10px;
-    border: 2px solid ${props => props.theme.colors.highlight};
-	background-color: ${props => props.backgroundColor};
+	border: 2px solid ${(props) => props.theme.colors.highlight};
+	box-shadow: 1px 1px 3px 0px rgba(150,150,150,1);
+	background-color: ${(props) => props.backgroundColor};
     display: flex;
     flex: 2;
     flex-direction: row !important;
 `;
 
-const ContainerStyle = styled.div `
+const ContainerStyle = styled.div`
     width: 100%;
     height: fit-content;
     display: flex;
@@ -29,115 +29,120 @@ const ContainerStyle = styled.div `
     background-color: transparent;
 `;
 
-const NewNoteEditor = ({arrayOfNotes, setNumberOfNotes, isModal, indexNoteToEdit, exitModal}) => {
-	const [showEditor, setShowEditor] = useState(isModal ? true : false);
+function NewNoteEditor({
+	createNote, exitModal, isModal, noteData,
+}) {
+	const [showEditor, setShowEditor] = useState(isModal); //  ? true : false
 	const themeContext = useContext(ThemeContext);
-	const {currentUser} = useContext(AuthContext);
 	const [backgroundColor, setBackgroundColor] = useState(themeContext.colors.noteTheme[0]);
-    const [inputTitle, setInputTitle] = useState('');
-	const [inputTextArea, setInputTextArea] = useState('');
-	const [pin, setPin] = useState(false);
-	const [noteColor, setNoteColor] = useState(0);
-	const [imageURL, setImageURL] = useState(null);
+	const { currentUser } = useContext(AuthContext);
+	const {
+		title = '',
+		text = '',
+		pinned = false,
+		color = 0,
+		image = null,
+	} = noteData || {};
+	const [noteInfo, setNoteInfo] = useState({
+		title,
+		text,
+		pinned,
+		color,
+		image,
+	});
 
-    const imageButtonHanddler = (e) => {
-        setImageURL(imageURL ? null : 'imagen.jpg');
-    };
+	const imageButtonHanddler = () => {
+		const newInfo = { ...noteInfo };
+		newInfo.image = newInfo.image ? null : 'imagen.jpg';
+		setNoteInfo(newInfo);
+	};
 
-    const textAreaClickHanddler = (e) => {
-        e.preventDefault();
-        setShowEditor(true);
-    };
+	const textAreaClickHanddler = (ev) => {
+		ev.preventDefault();
+		setShowEditor(true);
+	};
 
-	const onKeyPressHanddler = (e) => {
-        if(e.key === 'Escape') {
-			e.target.blur();
+	const onKeyPressHanddler = (ev) => {
+		if (ev.key === 'Escape') {
+			ev.target.blur();
 			setShowEditor(false);
-			if(isModal) {
+			if (isModal) {
 				exitModal();
 			}
-        }
-    };
+		}
+	};
 
-    const titleOnChange = (e) => {
-        setInputTitle(e.target.value);
-    };
+	const inputOnChangeHanddler = (ev) => {
+		ev.preventDefault();
+		const newInfo = { ...noteInfo };
+		newInfo[ev.target.name] = ev.target.value;
+		setNoteInfo(newInfo);
+	};
 
-    const textAreaOnChange = (e) => {
-        setInputTextArea(e.target.value);
+	const setPin = () => {
+		const newInfo = { ...noteInfo };
+		newInfo.pinned = !noteInfo.pinned;
+		setNoteInfo(newInfo);
+	};
+
+	const setNoteColor = (colorIndex) => {
+		const newInfo = { ...noteInfo };
+		newInfo.color = colorIndex;
+		setNoteInfo(newInfo);
 	};
 
 	useEffect(() => {
-        setInputTitle('');
-		setInputTextArea('');
-		setNoteColor(0);
-		setImageURL(null);
+		setNoteInfo({
+			title,
+			text,
+			pinned,
+			color,
+			image,
+		});
 	}, [showEditor]);
 
 	useEffect(() => {
-		setBackgroundColor(themeContext.colors.noteTheme[noteColor]);
-	}, [noteColor]);
+		setBackgroundColor(themeContext.colors.noteTheme[noteInfo.color]);
+	}, [noteInfo, themeContext.colors.noteTheme]);
 
-	useEffect(() => {
-        if(isModal){
-			let noteToEdit = Object.assign({}, arrayOfNotes[indexNoteToEdit]);
-			console.log('entrooooo ');
-			console.log(indexNoteToEdit);
-			setInputTitle(noteToEdit.title);
-			setInputTextArea(noteToEdit.text);
-			//setNoteColor(noteToEdit.color);
-			//setImageURL(null);
-		}
-	}, []);
-
-	const createNoteHanddler = (e) => {
-        if(inputTitle != '' || inputTextArea != '' || imageURL != null) {
-			let info = {
-				color: noteColor,
-				img: imageURL,
+	const createNoteHanddler = () => {
+		if (noteInfo.inputTitle !== '' || noteInfo.inputTextArea !== '' || noteInfo.imageURL !== null) {
+			const info = {
+				color: noteInfo.color,
+				img: noteInfo.image,
 				label: null,
-				pinned: pin,
+				pinned: noteInfo.pinned,
 				archive: false,
 				deleted: false,
-				text: inputTextArea,
-				title: inputTitle,
+				text: noteInfo.text,
+				title: noteInfo.title,
 				uid: currentUser.uid,
+			};
+			createNote(info, noteData);
+			setShowEditor(false);
+			if (isModal) {
+				exitModal();
 			}
-			createNoteInDB(info).then(function(docRef) {
-				const newDataArray = [...arrayOfNotes];
-				newDataArray.push(info);
-				setNumberOfNotes(newDataArray);
-				setShowEditor(false);
-            })
-            .catch(function(error) {
-				alert("Error adding document: ", error);
-            });
 		}
-    };
+	};
 
-    return (
+	return (
 		<ContainerStyle>
 			<CreateNoteStyle backgroundColor={backgroundColor}>
 				<EditableNote
-					inputTitle={inputTitle}
-					inputTextArea={inputTextArea}
+					noteInfo={noteInfo}
 					showEditor={showEditor}
-					pinned={pin}
-					pinButtonOnClick={() => setPin(!pin)}
-					noteColor={noteColor}
+					inputOnChangeHanddler={inputOnChangeHanddler}
+					pinButtonOnClick={setPin}
 					setNoteColor={setNoteColor}
 					imageButtonHanddler={imageButtonHanddler}
-					inputOnInput={titleOnChange}
-					textAreaOnInput={textAreaOnChange}
 					textAreaOnClick={textAreaClickHanddler}
 					onKeyDown={onKeyPressHanddler}
-					createNoteButton = {createNoteHanddler}
+					createNoteButton={createNoteHanddler}
 				/>
 			</CreateNoteStyle>
 		</ContainerStyle>
-    );
+	);
 }
 
 export default NewNoteEditor;
-
-//<NoteArea arrayOfNotes={arrayOfNotes} />

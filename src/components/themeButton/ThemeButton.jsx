@@ -1,80 +1,49 @@
-import React, {useState, useContext, useEffect} from 'react';
-import styled, { ThemeContext } from 'styled-components';
+import React, { useState, useContext } from 'react';
+import { ThemeContext } from 'styled-components';
 
-import ButtonImage from '../ButtonImage/ButtonImage.component';
+import {
+	ImageStyle, ColorButton, Dropdown, ThemeButtonContainer,
+} from './ThemeButtonComponents';
+import ButtonImage from '../ButtonImage/ButtonImage';
+
 import themeSVG from '../../assets/icons/theme.svg';
 import selectedSVG from '../../assets/icons/accept.svg';
 
-const ImageStyle = styled.img `
-    height:24px;
-    width:24px;
-	display: ${props => props.display};
-`;
-
-const ColorButton = styled.button `
-	width: 40px;
-	height: 40px;
-	border: ${props => props.border ? '1.5px solid' + props.theme.colors.highlight : 'none'};
-	border-radius: 50%;
-	margin: 5px;
-	background-color: ${props => props.colorPos};
-`;
-
-const Dropdown = styled.div `
-	display: ${props => props.display};
-	position: relative;
-	top: -48px;
-	right: 0px;
-	width: 250px;
-	height: fit-content;
-	background-color: ${props => props.theme.colors.background};
-	border: 1px solid ${props => props.theme.colors.highlight};
-	flex-direction: row;
-	flex-flow: wrap;
-`;
-
-const ThemeButtonContainer = styled.div `
-	display: flex;
-	flex-direction: column;
-	align-items: flex-end;
-	height: fit-content;
-	width: 40px;
-	background-color: transparent;
-`;
-
-const ThemeButton = ({noteColor, setNoteColor, noteIndex}) => {
+const ThemeButton = ({
+	noteColor, setNoteColor, noteIndex,
+}) => {
 	const themeContext = useContext(ThemeContext);
-	let [display, setDisplay] = useState(false);
-	let [selectedColor, setSelectedColor] = useState(noteColor);
+	const [showMenu, setShowMenu] = useState(false);
+	const [selectedColor, setSelectedColor] = useState(noteColor);
 
-	const onMouseEnterHanddler = (e) => {
-		e.preventDefault();
-		setDisplay(true);
-	}
+	const onMouseEnterHanddler = (event) => {
+		event.preventDefault();
+		setShowMenu(true);
+	};
 
-	const onMouseLeaveHanddler = (e) => {
-		e.preventDefault();
-		setDisplay(false);
-	}
+	const onMouseLeaveHanddler = (event) => {
+		event.preventDefault();
+		setShowMenu(false);
+	};
 
-	const onClickHanddler = (index) => (e) => {
+	const onClickHanddler = (index) => (event) => {
 		setSelectedColor(index);
-		if(noteIndex){
-			setNoteColor(noteIndex, {color: index});
-		}else{
+		if (noteIndex) {
+			setNoteColor(noteIndex, { color: index });
+		} else {
 			setNoteColor(index);
 		}
-	}
+	};
 
-	const colorButtons = themeContext.colors.noteTheme.map( (element, index) => {
+	const colorButtons = themeContext.colors.noteTheme.map((element, index) => {
 		return (
 			<ColorButton
 				key={element}
 				colorPos={element}
-				border={index == 0 ? true : false}
+				border={index === 0} // ? true : false
 				onClick={onClickHanddler(index)}
 			>
-				 <ImageStyle src={selectedSVG} display={ index == selectedColor ? 'block' : 'none'} />
+				<ImageStyle src={selectedSVG} display={index === selectedColor ? 'block' : 'none'} />
 			</ColorButton>
 		);
 	});
@@ -85,12 +54,12 @@ const ThemeButton = ({noteColor, setNoteColor, noteIndex}) => {
 			onMouseLeave={onMouseLeaveHanddler}
 		>
 			<ButtonImage
-				altText='Change color'
+				altText="Change color"
 				imageRoute={themeSVG}
-				size='40px'
-				margin='0px 5px'
+				size="40px"
+				margin="0px 5px"
 			/>
-			<Dropdown display={display ? 'flex' : 'none'}>
+			<Dropdown display={showMenu ? 'flex' : 'none'}>
 				{colorButtons}
 			</Dropdown>
 		</ThemeButtonContainer>
