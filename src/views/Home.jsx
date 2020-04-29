@@ -3,7 +3,6 @@ import styled, { ThemeProvider } from 'styled-components';
 
 import * as theme from '../theme/theme';
 import GlobalStyle from '../GlobalStyle';
-import { closeSession } from '../controller/Auth';
 
 import { ModalProvider } from '../components/Modal/Modal';
 import { HeaderBar } from '../components/HeaderBar';
@@ -31,20 +30,6 @@ const MainStage = styled.div`
   flex-direction: row;
 `;
 
-const ButtonStyled = styled.button`
-    margin: 20px;
-    height: 42px;
-    width: 122px;
-    background: transparent;
-    border: 2px solid ${(props) => props.theme.colors.forestGreen};
-    border-radius: 20px;
-	font-size: 22px;
-    :hover {
-        background-color: ${(props) => props.theme.colors.forestGreen};
-        color: #ffffff;
-    }
-`;
-
 function Home({ history }) {
 	const [darkTheme, setDarkTheme] = useState(true);
 	const [showMenu, setShowMenu] = useState(true);
@@ -56,15 +41,6 @@ function Home({ history }) {
 
 	const manageMenuState = () => {
 		setShowMenu(!showMenu);
-	};
-
-	const singOutButton = async () => {
-		try {
-			await closeSession();
-			history.push('/login');
-		} catch (error) {
-			alert(error);
-		}
 	};
 
 	return (

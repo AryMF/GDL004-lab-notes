@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import ButtonImage from '../ButtonImage/ButtonImage';
+// import ButtonImage from '../ButtonImage/ButtonImage';
 import ThemeButton from '../ThemeButton/ThemeButton';
 
-import imageSVG from '../../assets/icons/image.svg';
+// import imageSVG from '../../assets/icons/image.svg';
 
 const ToolBarStyle = styled.div`
     background-color: transparent;

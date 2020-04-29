@@ -6,7 +6,7 @@ import ThemeButton from '../ThemeButton/ThemeButton';
 
 import trashSVG from '../../assets/icons/trash.svg';
 import archiveSVG from '../../assets/icons/archive.svg';
-import imageSVG from '../../assets/icons/image.svg';
+// import imageSVG from '../../assets/icons/image.svg';
 import editSVG from '../../assets/icons/edit.svg';
 
 const ToolBarStyle = styled.div`
@@ -40,13 +40,15 @@ function ToolBar({
 				size="40px"
 				margin="0px 5px"
 			/>
-			{/*<ButtonImage
+			{/*
+			<ButtonImage
 				altText="Add image"
 				imageRoute={imageSVG}
 				handdler={() => {alert('Hacer algo.')}}
 				size="40px"
 				margin="0px 5px"
-			/>*/}
+			/>
+			*/}
 			<ButtonImage
 				altText="Edit"
 				imageRoute={editSVG}
