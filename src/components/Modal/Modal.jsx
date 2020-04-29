@@ -27,9 +27,15 @@ export function ModalProvider({ children }) {
 export function Modal({ onClose, children, ...props }) {
 	const modalNode = useContext(Context);
 
+	const clickOnOverlay = (event) => {
+		if (event.target.getAttribute('data-name') === 'ovelay') {
+			onClose();
+		}
+	};
+
 	return modalNode
 		? ReactDOM.createPortal(
-			<Overlay onClick={onClose}>
+			<Overlay data-name="ovelay" onClick={clickOnOverlay}>
 				<Dialog {...props}>
 					<div>
 						{children}
