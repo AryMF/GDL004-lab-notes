@@ -121,7 +121,6 @@ const Notes = ({ sectionActive }) => {
 						isModal
 						exitModal={closeEditNoteModal}
 						noteData={notesDataArray[noteIndex]}
-						//TODO: Funcion para actualizar nota en edit mode.
 						createNote={editNoteInfo}
 					/>
 				</Modal>

@@ -48,6 +48,8 @@ function NoteWall({
 
 
 	const changeConfiguration = (index, props) => {
+		// TODO: checar esto;
+		console.log('index: ', index);
 		const {
 			pinned, archive, deleted, color,
 		} = props;
